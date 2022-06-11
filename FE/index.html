@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <STYLE>
+        INPUT{
+            WIDTH:370px;
+            height: 50px;
+        }
+        button{
+            height: 30px;
+            width: 200px;
+        }
+        a{
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </STYLE>
+  </head>
+  <body>
+    <div>
+      <h1>ADD PRODUCT</h1>
+      <input id="id" type="text" placeholder="ENTER UNIQUE ID NUMBER FOR THE PRODUCT"/><BR>
+      <input id="name" type="text" placeholder="ENTER NAME OF THE PRODUCT"/><BR>
+      <input id="price" type="text" placeholder="ENTER PRICE OF THE PRODUCT"/><BR>
+   <button onclick="addProduct()">ADD PRODUCT</button>
+    </div>
+    <div>
+        <h1>DELETE PRODUCT</h1>
+        <input type="text" id="delete_id" placeholder="ENTER ID NUMBER OF THE PRODUCT TO DELETE"/><BR>
+        <button onclick=" deleteProduct()">delete PRODUCT</button><BR>
+            <h1>UPDATE PRODUCT</h1>
+        <input id="select" type="test" placeholder="ENTER ID NUMBER OF THE PRODUCT TO UPDATE"/><BR>
+        <button onclick=" updateproduct()">update PRODUCT</button>
+        <!-- <button onclick=" updateproduct()">update PRODUCT</button> -->
+    </div>
+    <div><a href="http://localhost:5000/api/products" > click to get the products</a></div>
+  </body>
+</html>
+<script>
+
+  async  function addProduct(){
+        const data = {
+            id:document.getElementById("id").value,
+            name:document.getElementById("name").value,
+            price:document.getElementById("price").value,
+
+
+        }
+        let responce =  await fetch('http://localhost:3010/api/products',{
+            method:"POST",
+            body : JSON.stringify(data) ,
+            headers:{'Content-Type':'application/json'}
+
+
+        });
+
+        let dat = await responce.Json();
+
+
+    }
+
+    async function deleteProduct(){
+
+        let id = document.getElementById("delete_id").value;
+        let responce = fetch(`http://localhost:3010/api/products/${id}`,{
+
+            method:'DELETE',
+
+            headers:{'Content-Type':'application/json'},
+
+        })
+
+        let dat =  await responce.Json();
+        console.log('dat:',dat)
+    }
+    
+    async function updateproduct(){
+
+let id = document.getElementById("select").value;
+let responce = fetch(`http://localhost:3010/api/products/${id}`,{
+
+    method:'PATCH',
+
+    body: JSON.stringify({
+        // id:"70",
+        name:"reonaldo"
+    }),
+
+    headers:{'Content-Type':'application/json'},
+
+})
+    }
+// let dat =  await responce.json();
+// console.log('dat:',dat)
+//     }
+
+
+
+
+
+
+
+
+
+</script>
